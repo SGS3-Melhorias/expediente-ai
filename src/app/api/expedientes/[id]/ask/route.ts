@@ -1,4 +1,4 @@
-import { hasAnthropicKey } from "@/lib/api-key";
+import { hasDeepSeekKey } from "@/lib/api-key";
 import { answerQuestion } from "@/lib/claude";
 import { getExpediente, saveExpediente } from "@/lib/store";
 
@@ -11,9 +11,9 @@ export async function POST(req: Request, ctx: Ctx) {
   const { id } = await ctx.params;
   const exp = await getExpediente(id);
   if (!exp) return Response.json({ error: "Expediente não encontrado." }, { status: 404 });
-  if (!hasAnthropicKey()) {
+  if (!hasDeepSeekKey()) {
     return Response.json(
-      { error: "Perguntas sobre o PDF exigem ANTHROPIC_API_KEY." },
+      { error: "Perguntas sobre o PDF exigem DEEPSEEK_API_KEY." },
       { status: 503 },
     );
   }

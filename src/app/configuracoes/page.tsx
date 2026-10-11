@@ -61,7 +61,7 @@ export default function ConfigPage() {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Unidade e API</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Vocativo e signatários entram em toda Informação. A chave da Anthropic
+          Vocativo e signatários entram em toda Informação. A chave da DeepSeek
           fica só no servidor — nunca é exibida aqui.
         </p>
       </div>
@@ -71,7 +71,7 @@ export default function ConfigPage() {
           <AlertTitle>
             {api.configured
               ? `API configurada · modelo ${api.model}`
-              : "API Anthropic ausente"}
+              : "API DeepSeek ausente"}
           </AlertTitle>
           <AlertDescription className="space-y-2">
             <p>{api.hint}</p>
@@ -81,16 +81,16 @@ export default function ConfigPage() {
                   Abra{" "}
                   <a
                     className="underline"
-                    href="https://console.anthropic.com"
+                    href="https://platform.deepseek.com"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    console.anthropic.com
-                  </a>{" "}
-                  (a Claude Pro de claude.ai não serve).
+                    platform.deepseek.com
+                  </a>
+                  .
                 </li>
-                <li>Em Billing, adicione crédito de API.</li>
-                <li>Crie uma chave e grave ANTHROPIC_API_KEY no .env.local.</li>
+                <li>Em API Keys, crie uma chave e adicione saldo se ainda não houver.</li>
+                <li>Grave DEEPSEEK_API_KEY no .env.local.</li>
                 <li>Reinicie o servidor de desenvolvimento.</li>
               </ol>
             ) : null}

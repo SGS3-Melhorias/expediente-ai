@@ -1,5 +1,5 @@
-import Anthropic from "@anthropic-ai/sdk";
-import { anthropicModel, hasAnthropicKey } from "./api-key";
+import OpenAI from "openai";
+import { deepSeekModel, hasDeepSeekKey } from "./api-key";
 import { chunkText } from "./pdf";
 import { extractMarkers } from "./markers";
 import {
@@ -12,10 +12,13 @@ import { readSettings } from "./settings";
 import type { Analise, Expediente, Minuta, Sistema } from "./types";
 
 function client() {
-  if (!hasAnthropicKey()) {
-    throw new Error("ANTHROPIC_API_KEY ausente");
+  if (!hasDeepSeekKey()) {
+    throw new Error("DEEPSEEK_API_KEY ausente");
   }
-  return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  return new OpenAI({
+    apiKey: process.env.DEEPSEEK_API_KEY,
+    baseURL: process.env.DEEPSEEK_BASE_URL?.trim() || "https://api.deepseek.com",
+  });
 }
 
 function parseJsonObject(text: string): Record<string, unknown> {
@@ -28,15 +31,17 @@ function parseJsonObject(text: string): Record<string, unknown> {
 }
 
 async function complete(system: string, user: string) {
-  const res = await client().messages.create({
-    model: anthropicModel(),
+  const res = await client().chat.completions.create({
+    model: deepSeekModel(),
     max_tokens: 8000,
-    system,
-    messages: [{ role: "user", content: user }],
+    messages: [
+      { role: "system", content: system },
+      { role: "user", content: user },
+    ],
   });
-  const block = res.content.find((c) => c.type === "text");
-  if (!block || block.type !== "text") throw new Error("IA não retornou texto");
-  return block.text;
+  const text = res.choices[0]?.message?.content?.trim();
+  if (!text) throw new Error("IA não retornou texto");
+  return text;
 }
 
 export async function analyzePdfText(input: {

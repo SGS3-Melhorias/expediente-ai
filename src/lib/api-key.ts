@@ -1,18 +1,18 @@
-export function hasAnthropicKey() {
-  return Boolean(process.env.ANTHROPIC_API_KEY?.trim());
+export function hasDeepSeekKey() {
+  return Boolean(process.env.DEEPSEEK_API_KEY?.trim());
 }
 
-export function anthropicModel() {
-  return process.env.ANTHROPIC_MODEL?.trim() || "claude-sonnet-4-5";
+export function deepSeekModel() {
+  return process.env.DEEPSEEK_MODEL?.trim() || "deepseek-chat";
 }
 
 export function apiStatus() {
-  const configured = hasAnthropicKey();
+  const configured = hasDeepSeekKey();
   return {
     configured,
-    model: anthropicModel(),
+    model: deepSeekModel(),
     hint: configured
-      ? "A API Anthropic está configurada neste servidor."
-      : "Claude Pro (claude.ai) não autentica este app. Crie uma chave em console.anthropic.com, coloque ANTHROPIC_API_KEY no .env.local e reinicie o servidor.",
+      ? "A API DeepSeek está configurada neste servidor."
+      : "Crie uma chave em platform.deepseek.com, coloque DEEPSEEK_API_KEY no .env.local e reinicie o servidor.",
   };
 }

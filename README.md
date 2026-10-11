@@ -16,15 +16,14 @@ Não há integração com o SEI nem com o SAJADM-CPA. O fluxo continua começand
 
 Marcações `[COMPLETAR]` e `[VERIFICAR]` aparecem numa lista para revisão.
 
-## Claude Pro não conecta neste app
+## API DeepSeek
 
-A assinatura do chat em [claude.ai](https://claude.ai) e a **API Anthropic** são produtos diferentes. Este servidor chama a API.
+A leitura e a redação usam a API da DeepSeek (`deepseek-chat`).
 
-1. Entre em [console.anthropic.com](https://console.anthropic.com) (pode ser o mesmo e-mail da Pro).
-2. Em **Billing**, adicione crédito — a Pro **não** inclui isso.
-3. Em **API keys**, crie uma chave `sk-ant-...`.
-4. Copie `.env.example` para `.env.local` e preencha `ANTHROPIC_API_KEY`.
-5. Reinicie o servidor.
+1. Entre em [platform.deepseek.com](https://platform.deepseek.com).
+2. Crie uma chave em **API Keys** e adicione saldo se ainda não houver.
+3. Copie `.env.example` para `.env.local` e preencha `DEEPSEEK_API_KEY`.
+4. Reinicie o servidor.
 
 A equipe usa **uma chave da unidade** no servidor. Sem chave, a fila abre com um expediente de demonstração; análise e redação reais ficam bloqueadas.
 

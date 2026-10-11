@@ -1,4 +1,4 @@
-import { hasAnthropicKey } from "@/lib/api-key";
+import { hasDeepSeekKey } from "@/lib/api-key";
 import { draftInformacao } from "@/lib/claude";
 import { getExpediente, saveExpediente } from "@/lib/store";
 
@@ -23,10 +23,10 @@ export async function POST(_req: Request, ctx: Ctx) {
       { status: 400 },
     );
   }
-  if (!hasAnthropicKey()) {
+  if (!hasDeepSeekKey()) {
     if (exp.minuta) return Response.json(exp);
     return Response.json(
-      { error: "Sem ANTHROPIC_API_KEY não é possível gerar uma nova Informação." },
+      { error: "Sem DEEPSEEK_API_KEY não é possível gerar uma nova Informação." },
       { status: 503 },
     );
   }

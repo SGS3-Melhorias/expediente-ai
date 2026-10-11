@@ -69,7 +69,7 @@ export function AppHeader() {
             {api == null
               ? "API…"
               : api.configured
-                ? "API Anthropic"
+                ? "API DeepSeek"
                 : "API ausente"}
           </span>
         </nav>

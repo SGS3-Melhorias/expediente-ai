@@ -1,4 +1,4 @@
-import { hasAnthropicKey } from "@/lib/api-key";
+import { hasDeepSeekKey } from "@/lib/api-key";
 import { analyzePdfText } from "@/lib/claude";
 import { getExpediente, saveExpediente } from "@/lib/store";
 
@@ -11,12 +11,12 @@ export async function POST(_req: Request, ctx: Ctx) {
   const { id } = await ctx.params;
   const exp = await getExpediente(id);
   if (!exp) return Response.json({ error: "Expediente não encontrado." }, { status: 404 });
-  if (!hasAnthropicKey()) {
+  if (!hasDeepSeekKey()) {
     if (exp.analise) return Response.json(exp);
     return Response.json(
       {
         error:
-          "Sem ANTHROPIC_API_KEY. A assinatura Claude Pro não autentica este app. Configure a API em console.anthropic.com.",
+          "Sem DEEPSEEK_API_KEY. Crie uma chave em platform.deepseek.com e coloque-a no .env.local.",
       },
       { status: 503 },
     );
