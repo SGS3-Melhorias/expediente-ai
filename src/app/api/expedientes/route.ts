@@ -43,8 +43,8 @@ export async function POST(req: Request) {
     return Response.json({ error: "PDF acima de 40 MB." }, { status: 400 });
   }
 
-  const buffer = new Uint8Array(await file.arrayBuffer());
-  const extracted = await extractPdf(buffer);
+  const bytes = Buffer.from(await file.arrayBuffer());
+  const extracted = await extractPdf(new Uint8Array(bytes));
   const assuntoForm = String(form.get("assunto") ?? "").trim();
   const deteccao = detectSystem(extracted.text, {
     title: extracted.title,
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
   const id = newId();
   await mkdir(UPLOADS_DIR, { recursive: true });
   const pdfPath = path.join(UPLOADS_DIR, `${id}.pdf`);
-  await writeFile(pdfPath, buffer);
+  await writeFile(pdfPath, bytes);
 
   const now = new Date().toISOString();
   const expediente: Expediente = {
